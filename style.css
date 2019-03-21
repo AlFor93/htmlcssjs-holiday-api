@@ -28,18 +28,49 @@
   color: antiquewhite;
 }
 
+.header h1 {
+  margin: 0 100px;
+}
+
+.header .fas {
+  color: #444;
+}
+
 .days-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 50%;
-  height: calc(100vh - 100px);
+  width: 100%;
+  height: calc(100vh - 300px);
   margin: auto;
+  margin-top: 30px;
+  background-color: #8873;
+}
+
+#days-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  /* margin: auto; */
 }
 
 li {
-  margin: 3px 0 3px 10px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  list-style-type: none;
+  margin: 3px 10px 3px 10px;
   font-size: 18px;
+  width: 150px;
+  height: 50px;
+  border: 1px solid darkgray;
+  text-align: center;
+}
+
+li:hover {
+  background-color: darksalmon;
 }
 /* Colore festività */
 .holiday {

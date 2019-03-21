@@ -10,7 +10,7 @@ function getMonthDaysCount (year, month) {
   var mom = moment();
   mom.month(month);
   mom.year(year);
-  var daysCount = mom.daysInMonth(month);
+  var daysCount = mom.daysInMonth();
   return daysCount;
 }
 //FUNZIONE PER OTTTENERE UNA DATA IN FORMATO AMERICANO
@@ -26,7 +26,7 @@ function getMachineDate (year, month, day) {
 //FUNZIONE PER STAMPARE MESE E GIORNI TOTALI PRESENTI IN ESSO
 function printTitle (year , month) {
   var monthName = $("#month-name");
-  monthName.text(getMonth(month) + ": 1 - " + getMonthDaysCount(month));
+  monthName.text(getMonth(month) + ": 1 - " + getMonthDaysCount(year, month));
 }
 //FUNZIONE PER STAMPARE I GIORNI DEL MESE IN CORSO
 function printDays (year, month) {
@@ -76,7 +76,7 @@ function printHolidays (year, month) {
 
 }
 //FUNZIONE PER CAPIRE QUALI SONO I GIORNI FESTIVI
-function addHolidays(holidays) {
+function addHolidays (holidays) {
   for (var i = 0; i < holidays.length; i++) {
     var holiday = holidays[i];
     // console.log(holiday)
@@ -84,11 +84,36 @@ function addHolidays(holidays) {
     var holidayName = holiday.name;
     var selector = "li[ data-date='" + holidayMachineDate + "']"
     var liHoliday = $(selector);
-    console.log(selector);
-    liHoliday.addClass("holiday");
+    liHoliday.addClass("holiday").text(liHoliday.text()+" - "+holiday.name);
   }
 }
+//FUNZIONE PER SCORRERE I MESI VERSO DESTRA
+function goRight (year, month) {
+  month ++;
+  piallaTutto();
+  printTitle (year, month);
+  printDays (year, month);
+  printHolidays (year, month);
+  return month;
+}
+//FUNZIONE PER SCORRERE I MESI VERSO L'INIZIO DELL'ANNO
+function goLeft (year, month) {
+  month --;
+  piallaTutto();
+  printTitle (year, month);
+  printDays (year, month);
+  printHolidays (year, month);
+  return month;
+}
+//FUNZIONE PER PULIRE TUTTI I CAMPI DEL MESE IN CORSO
+function piallaTutto() {
 
+  var h1 = $(".txt");
+  h1.text("");
+
+  var li = $("li");
+  li.remove();
+}
 
 
 
@@ -98,10 +123,26 @@ function addHolidays(holidays) {
 function init() {
   var year = 2018;
   var month = 0; //gen --> 0 , dic --> 11
+  var leftArrow = $(".fa-arrow-alt-circle-left");
+  var rightArrow = $(".fa-arrow-alt-circle-right");
 
   printTitle (year, month);
   printDays (year, month);
   printHolidays (year, month);
+  rightArrow.click(function(){
+    if (month<11) {
+      month = goRight(year, month);
+    } else {
+      alert("Accesso negato!")
+    }
+  });
+  leftArrow.click(function(){
+    if (month>0) {
+      month = goLeft(year, month);
+    } else {
+      alert("Accesso negato!")
+    }
+  });
 }
 
 $(document).ready(init);
